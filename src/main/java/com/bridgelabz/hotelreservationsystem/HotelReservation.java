@@ -25,8 +25,10 @@ public class HotelReservation {
                 .min(Comparator.comparing(Hotel::getRate))
                 .orElse(null);
 
-        int cheapestPrice=hotel.getRate();
-        System.out.println("Hotel name: "+hotel.getHotelName()+" \nCheapest price: "+cheapestPrice*noOfDaysBetween);
+        if (hotel != null) {
+            int cheapestPrice = hotel.getRate();
+            System.out.println("Hotel name: " + hotel.getHotelName() + " \nCheapest price: " + cheapestPrice * noOfDaysBetween);
+        }
         return hotel;
     }
 
