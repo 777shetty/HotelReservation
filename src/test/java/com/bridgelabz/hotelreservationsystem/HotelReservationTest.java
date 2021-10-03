@@ -45,4 +45,14 @@ public class HotelReservationTest {
         Hotel hotel = hotelReservation.getCheapestHotel(startDate, endDate);
         Assert.assertEquals("BridgeWood", hotel.getHotelName());
     }
+    @Test
+    public void givenStartAndEndDate_WhenHotelListEmpty_ShouldReturnNull() {
+
+        HotelReservation hotelReservation = new HotelReservation();
+        LocalDateTime startDate = LocalDateTime.of(2021, 9, 10, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2021, 9, 12, 0, 0);
+        Hotel hotel = hotelReservation.getCheapestHotel(startDate, endDate);
+        Assert.assertNull(hotel);
+    }
 } 
+
