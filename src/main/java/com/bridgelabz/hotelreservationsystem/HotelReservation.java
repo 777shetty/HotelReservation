@@ -1,8 +1,17 @@
 package com.bridgelabz.hotelreservationsystem;
 
-public class HotelReservation {
-	public static void main(String[] args) {
-		System.out.println("Welcome to Hotel Rservaation program");
-	}
+import java.util.ArrayList;
 
+public class HotelReservation {
+    Hotel hotel;
+    ArrayList<Hotel> hotels = new ArrayList<>();
+
+    public void addHotels(String hotelName, int rating, CustomerType customerType, int rate) {
+
+        hotel = new Hotel(hotelName, rating, customerType, rate);
+        hotels.add(hotel);
+    }
+    public int getSize(){
+        return hotels.size();
+    }
 }
