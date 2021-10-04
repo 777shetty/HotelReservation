@@ -1,75 +1,57 @@
 package com.bridgelabz.hotelreservationsystem;
+import java.util.Map;
 
+import java.util.Map;
 
-enum CustomerType {
-	   REGULAR
-	}
 
 public class Hotel {
 
     private String hotelName;
     private int rating;
-    private CustomerType customerType;
-    private int weekDayRate;
-    private int weekEndRate;
-    private int rate;
 
-    public Hotel(String hotelName, int rating, CustomerType customerType, int weekDayRate, int weekEndRate, int rate) {
+    private Map<CustomerType, Integer> weekDayRate;
+    private Map<CustomerType, Integer> weekEndRate;
+
+
+    public Hotel(String hotelName, int rating, Map<CustomerType, Integer> weekDayRate, Map<CustomerType, Integer> weekEndRate) {
         super();
         this.hotelName = hotelName;
         this.rating = rating;
-        this.customerType = customerType;
-        this.rate = rate;
+
         this.weekDayRate = weekDayRate;
         this.weekEndRate = weekEndRate;
     }
-    
 
-
-	public String getHotelName() {
-		return hotelName;
-	}
-
-	public void setHotelName(String hotelName) {
-		this.hotelName = hotelName;
-	}
-
-	public int getRating() {
-		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
-	public CustomerType getCustomerType() {
-        return customerType;
+    public String getHotelName() {
+        return hotelName;
     }
 
-    public void setCustomerType(CustomerType customerType) {
-        this.customerType = customerType;
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 
-	public int getRate() {
-		return rate;
-	}
+    public int getRating() {
+        return rating;
+    }
 
-	public void setRate(int rate) {
-		this.rate = rate;
-	}
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
-	public int getWeekDayRate() {
-		return weekDayRate;
-	}
+    public Integer getWeekDayRate(CustomerType customerType) {
+        return weekDayRate.get(customerType);
+    }
 
-	public void setWeekDayRate(int weekDayRate) {
-		this.weekDayRate = weekDayRate;
-	}
+    public void setWeekDayRate(Map<CustomerType, Integer> weekDayRate) {
+        this.weekDayRate = weekDayRate;
+    }
 
-	public int getWeekEndRate() {
-		return weekEndRate;
-	}
+    public Integer getWeekEndRate(CustomerType customerType) {
+        return weekEndRate.get(customerType);
+    }
 
-	public void setWeekEndRate(int weekEndRate) {
-		this.weekEndRate = weekEndRate;
-	}
+    public void setWeekEndRate(Map<CustomerType, Integer> weekEndRate) {
+        this.weekEndRate = weekEndRate;
+    }
+
 }
