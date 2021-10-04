@@ -9,7 +9,6 @@ public class Hotel {
 
     private String hotelName;
     private int rating;
-
     private CustomerType customerType;
     private int weekDayRate;
     private int weekEndRate;
