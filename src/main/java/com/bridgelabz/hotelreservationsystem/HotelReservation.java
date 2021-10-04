@@ -70,5 +70,27 @@ public class HotelReservation {
         }
         return hotelList2;
     }
-
+    public Hotel getCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate){
+        ArrayList<Hotel> cheapestHotelList = getCheapestHotelList(startDate, endDate);
+        int rate = 0;
+        Hotel bestHotel = null;
+        for (Hotel hotel: cheapestHotelList) {
+            if(rate<hotel.getRating()){
+                rate = hotel.getRating();
+                bestHotel = hotel;
+            }
+        }
+        return bestHotel;
+    }
+    public Hotel getBestRatedHotel(LocalDate startDate, LocalDate endDate){
+        int rate = 0;
+        Hotel bestHotel = null;
+        for (Hotel hotel: hotelList) {
+            if(rate<hotel.getRating()){
+                rate = hotel.getRating();
+                bestHotel = hotel;
+            }
+        }
+        return bestHotel;
+    }
 }
