@@ -2,5 +2,6 @@ package com.bridgelabz.hotelreservationsystem;
 
 
 enum CustomerType {
-    REGULAR
-}
+	 REGULAR,
+	    REWARD
+	}

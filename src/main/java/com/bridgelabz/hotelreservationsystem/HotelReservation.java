@@ -20,14 +20,17 @@ public class HotelReservation {
         this.hotelList = new ArrayList<>();
         this.customer = CustomerType.REGULAR;
     }
-    public void addHotel(String hotelName, int rating, int weekDayRate, int weekEndRate) {
+    public void addHotel(String hotelName, int rating, int regularWeekDayRate, int regularWeekEndRate, int rewardWeekDayRate, int rewardWeekEndRate) {
 
     	 Map<CustomerType, Integer> weekDayRateMap = new HashMap<>();
-         weekDayRateMap.put(CustomerType.REGULAR, weekDayRate);
          Map<CustomerType, Integer> weekEndRateMap = new HashMap<>();
-         weekEndRateMap.put(CustomerType.REGULAR, weekEndRate);
          hotel = new Hotel(hotelName, rating, weekDayRateMap, weekEndRateMap);
          hotelList.add(hotel);
+         weekDayRateMap.put(CustomerType.REGULAR, regularWeekDayRate);
+         weekEndRateMap.put(CustomerType.REGULAR, regularWeekEndRate);
+
+         weekDayRateMap.put(CustomerType.REWARD, rewardWeekDayRate);
+         weekEndRateMap.put(CustomerType.REWARD, rewardWeekEndRate);
     }
     public int getSize(){
         return hotelList.size();
@@ -93,4 +96,8 @@ public class HotelReservation {
         }
         return bestHotel;
     }
+    public void setCustomerType(CustomerType customerType){
+        this.customer = customerType;
+    }
+
 }
