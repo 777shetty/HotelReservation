@@ -24,6 +24,7 @@ public class Hotel {
         this.weekDayRate = weekDayRate;
         this.weekEndRate = weekEndRate;
     }
+    
 
 
 	public String getHotelName() {
