@@ -4,34 +4,30 @@ package com.bridgelabz.hotelreservationsystem;
 
 import org.junit.Assert;
 import org.junit.Test;
-
+import org.junit.Before;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class HotelReservationTest {
 
-    @Test
-    public void add_LakeWoodHotel_WhenSuccessful_shouldChangeListSize() {
-
-        HotelReservation hotelReservation = new HotelReservation();
+	HotelReservation hotelReservation;
+    LocalDate startDate;
+    LocalDate endDate;
+    @Before
+    public void initialize(){
+    	hotelReservation = new HotelReservation();
         hotelReservation.addHotel("LakeWood", 3, 110, 90,80,80);
+        hotelReservation.addHotel("BridgeWood", 4, 150, 50, 110, 50);
+        hotelReservation.addHotel("RidgeWood", 5, 220, 150, 100, 40);
+
+    
+    startDate = LocalDate.of(2020, 9, 11);
+    endDate = LocalDate.of(2020, 9, 12);
+    
+    hotelReservation.addHotel("BridgeWood", 4, 150, 50, 110, 50);
+    Assert.assertEquals(2, hotelReservation.getSize());
+        hotelReservation.addHotel("LakeWood", 3, 110, 90, 80, 80);
         Assert.assertEquals(1, hotelReservation.getSize());
-
-    }
-
-    @Test
-    public void add_BrideWoodHotel_WhenSuccessful_shouldChangeListSize() {
-
-        HotelReservation hotelReservation = new HotelReservation();
-        hotelReservation.addHotel("BridgeWood", 4, 150, 50,110,80);
-        Assert.assertEquals(1, hotelReservation.getSize());
-
-    }
-
-    @Test
-    public void add_RidgeWoodHotel_WhenSuccessful_shouldChangeListSize() {
-
-        HotelReservation hotelReservation = new HotelReservation();
         hotelReservation.addHotel("RidgeWood", 5, 220, 150,220,90);
         Assert.assertEquals(1, hotelReservation.getSize());
     }
@@ -88,4 +84,13 @@ public class HotelReservationTest {
         Hotel hotel = hotelReservation.getBestRatedHotel(startDate, endDate);
         Assert.assertEquals("RidgeWood", hotel.getHotelName());
     }
-}
+    @Test
+    public void givenStartAndEndDate_WhenCustomerTypeIsNull_ShouldReturnCheapestHotelWithHighestRatingForRegularCustomers() {
+
+        hotelReservation.setCustomerType(null);
+        Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
+        Assert.assertEquals("BridgeWood", hotel.getHotelName());
+
+    }
+} 
+
