@@ -97,7 +97,9 @@ public class HotelReservation {
         return bestHotel;
     }
     public void setCustomerType(CustomerType customerType){
-        this.customer = customerType;
-    }
+    	if(customerType != null) {
+            this.customer = customerType;
+        }
 
+    }
 }
