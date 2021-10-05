@@ -2,46 +2,50 @@ package com.bridgelabz.hotelreservationsystem;
 
 
 
+
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.Before;
-import java.time.LocalDate;
+import org.junit.Test;
+
+import com.bridgelabz.hotelreservationsystem.InvalidDateException.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HotelReservationTest {
 
-	HotelReservation hotelReservation;
-    LocalDate startDate;
-    LocalDate endDate;
+    HotelReservation hotelReservation;
+    String startDate;
+    String endDate;
     @Before
     public void initialize(){
-    	hotelReservation = new HotelReservation();
-        hotelReservation.addHotel("LakeWood", 3, 110, 90,80,80);
+
+        hotelReservation = new HotelReservationImpl();
+        hotelReservation.addHotel("LakeWood", 3, 110, 90, 80, 80);
         hotelReservation.addHotel("BridgeWood", 4, 150, 50, 110, 50);
         hotelReservation.addHotel("RidgeWood", 5, 220, 150, 100, 40);
 
-    
-    startDate = LocalDate.of(2020, 9, 11);
-    endDate = LocalDate.of(2020, 9, 12);
-    
-    hotelReservation.addHotel("BridgeWood", 4, 150, 50, 110, 50);
-    Assert.assertEquals(2, hotelReservation.getSize());
+        startDate = "11Sep2020";
+        endDate   = "12Sep2020";
+
+    }
+    @Test
+    public void addingHotels_WhenSuccessful_shouldChangeListSize() {
+
+        HotelReservation hotelReservation = new HotelReservationImpl();
+
         hotelReservation.addHotel("LakeWood", 3, 110, 90, 80, 80);
         Assert.assertEquals(1, hotelReservation.getSize());
-        hotelReservation.addHotel("RidgeWood", 5, 220, 150,220,90);
-        Assert.assertEquals(1, hotelReservation.getSize());
+
+        hotelReservation.addHotel("BridgeWood", 4, 150, 50, 110, 50);
+        Assert.assertEquals(2, hotelReservation.getSize());
+
+        hotelReservation.addHotel("RidgeWood", 5, 220, 150, 100, 40);
+        Assert.assertEquals(3, hotelReservation.getSize());
     }
 
     @Test
     public void givenStartAndEndDate_WhenHotelListNotEmpty_ShouldReturnHotelsWithMostCheapestPrice() {
 
-        HotelReservation hotelReservation = new HotelReservation();
-        hotelReservation.addHotel("LakeWood", 3, 110, 90,80,80);
-        hotelReservation.addHotel("BridgeWood", 4, 150, 50,110,80);
-        hotelReservation.addHotel("RidgeWood", 5, 220, 150,220,90);
-
-        LocalDate startDate = LocalDate.of(2020, 9, 11);
-        LocalDate endDate = LocalDate.of(2020, 9, 12);
         Hotel[] hotel = hotelReservation.getCheapestHotelList(startDate, endDate).toArray(new Hotel[0]);
         Assert.assertEquals("LakeWood", hotel[0].getHotelName());
         Assert.assertEquals("BridgeWood", hotel[1].getHotelName());
@@ -52,37 +56,31 @@ public class HotelReservationTest {
     @Test
     public void givenStartAndEndDate_WhenHotelListEmpty_ShouldReturnNull() {
 
-        HotelReservation hotelReservation = new HotelReservation();
-        LocalDate startDate = LocalDate.of(2020, 9, 11);
-        LocalDate endDate = LocalDate.of(2020, 9, 12);
-        ArrayList<Hotel> hotel = hotelReservation.getCheapestHotelList(startDate, endDate);
+        HotelReservation hotelReservation = new HotelReservationImpl();
+        List<Hotel> hotel = hotelReservation.getCheapestHotelList(startDate, endDate);
         Assert.assertTrue(hotel.isEmpty());
     }
     @Test
     public void givenStartAndEndDate_MethodGetCheapestBestRatedHotel_ShouldReturnCheapestHotelWithHighestRating() {
-
-        HotelReservation hotelReservation = new HotelReservation();
-        hotelReservation.addHotel("LakeWood", 3, 110, 90,80,80);
-        hotelReservation.addHotel("BridgeWood", 4, 150, 50,110,80);
-        hotelReservation.addHotel("RidgeWood", 5, 220, 150,220,90);
-
-        LocalDate startDate = LocalDate.of(2020, 9, 11);
-        LocalDate endDate = LocalDate.of(2020, 9, 12);
+        
         Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
         Assert.assertEquals("BridgeWood", hotel.getHotelName());
     }
     @Test
     public void givenStartAndEndDate_MethodGetBestRatedHotel_ShouldReturnHotelWithHighestRating() {
-
-        HotelReservation hotelReservation = new HotelReservation();
-        hotelReservation.addHotel("LakeWood", 3, 110, 90,80,80);
-        hotelReservation.addHotel("BridgeWood", 4, 150, 50,110,80);
-        hotelReservation.addHotel("RidgeWood", 5, 220, 150,220,90);
-
-        LocalDate startDate = LocalDate.of(2020, 9, 11);
-        LocalDate endDate = LocalDate.of(2020, 9, 12);
+        
         Hotel hotel = hotelReservation.getBestRatedHotel(startDate, endDate);
         Assert.assertEquals("RidgeWood", hotel.getHotelName());
+    }
+    @Test
+    public void givenStartAndEndDate_MethodGetCheapestBestRatedHotel_ShouldReturnCheapestHotelWithHighestRatingForRewardCustomers() {
+
+        hotelReservation.setCustomerType(CustomerType.REWARD);
+        Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
+        Assert.assertEquals("RidgeWood", hotel.getHotelName());
+        Assert.assertEquals(5, hotel.getRating());
+        Assert.assertEquals(140, hotelReservation.calculateTotalCostForGivenHotel(hotel, startDate, endDate));
+
     }
     @Test
     public void givenStartAndEndDate_WhenCustomerTypeIsNull_ShouldReturnCheapestHotelWithHighestRatingForRegularCustomers() {
@@ -92,5 +90,61 @@ public class HotelReservationTest {
         Assert.assertEquals("BridgeWood", hotel.getHotelName());
 
     }
-} 
+
+    @Test
+    public void whenGivenInvalidDateFormat_ShouldThrowException()
+    {
+
+        try
+        {
+            String initialDate="123-123";
+            String finalDate="10Jan2020";
+            hotelReservation.getCheapestHotelList(initialDate,finalDate);
+        }
+        catch (InvalidDateException e)
+        {
+            Assert.assertEquals(ExceptionType.INVALID_DATE_FORMAT ,e.type);
+        }
+    }
+
+    @Test
+    public void whenGiven_FinalDateLesserThanInitialDate_ShouldThrowException()
+    {
+        try
+        {
+            String initialDate="10Aug2020";
+            String finalDate="09Aug2020";
+            hotelReservation.getCheapestHotelList(initialDate,finalDate);
+        }
+        catch (InvalidDateException e)
+        {
+            Assert.assertEquals(ExceptionType.INVALID_DATES_ORDER ,e.type);
+        }
+    }
+    @Test
+    public void whenEnteredNullDates_ShouldThrowException()
+    {
+        try
+        {
+            hotelReservation.getCheapestHotelList(null,null);
+        }
+        catch (InvalidDateException e)
+        {
+            Assert.assertEquals(ExceptionType.ENTERED_NULL ,e.type);
+        }
+    }
+
+    @Test
+    public void whenEnteredEmptyDates_ShouldThrowException()
+    {
+        try
+        {
+            hotelReservation.getCheapestHotelList("","");
+        }
+        catch (InvalidDateException e)
+        {
+            Assert.assertEquals(ExceptionType.ENTERED_EMPTY ,e.type);
+        }
+    }
+}
 
