@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import static com.bridgelabz.hotelreservationsystem.DateServiceProvider.calculateTotalDays;
-import static com.bridgelabz.hotelreservationsystem.DateServiceProvider.calculateWeekDays;
 
 
 
@@ -41,7 +39,15 @@ public class HotelReservation {
         int numberOfWeekDays = (int) calculateWeekDays(startDate, endDate);
         return hotel.getWeekDayRate(this.customer) * numberOfWeekDays + hotel.getWeekEndRate(this.customer) * (numberOfDaysBetween - numberOfWeekDays);
     }
-    public ArrayList<Hotel> getCheapestHotelList(LocalDate startDate, LocalDate endDate) {
+    private int calculateWeekDays(LocalDate startDate, LocalDate endDate) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	private int calculateTotalDays(LocalDate startDate, LocalDate endDate) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public ArrayList<Hotel> getCheapestHotelList(LocalDate startDate, LocalDate endDate) {
 
         Hotel hotel = hotelList.stream()
         		 .min(Comparator.comparing(hotel1 -> calculateTotalCostForGivenHotel(hotel1, startDate, endDate)))
